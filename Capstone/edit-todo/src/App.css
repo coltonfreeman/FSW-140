@@ -1,0 +1,18 @@
+body {
+  background-color: #eee;
+}
+
+li {
+  list-style-type:none;  
+  font-size: 20px;
+}
+
+form button, li button {
+  margin-left: 4px;
+}
+
+.divItems {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
