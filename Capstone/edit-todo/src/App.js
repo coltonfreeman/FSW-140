@@ -1,6 +1,5 @@
 import './App.css';
-import ToDoList from '../components/ToDoList'
-//import {listOfJokes} from './JOKES.js';
+import ToDoList from '../components/ToDoList';
 import {useState, useEffect} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TodoForm from './components/TodoForm';

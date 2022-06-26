@@ -26,28 +26,6 @@ db.connect((err) => {
     console.log("MySql Database Connection Established Successfully!");
 })
 
-// app.get('/CreateDB', (req, res) => {
-//     let sql = "CREATE DATABASE Todos";
-//     db.query(sql, (err, result) => {
-//         if(err) {
-//             throw err;
-//         }
-//         res.send("New Database Created Successfully"); 
-//         console.log("New Database Created Successfully!")
-//     })
-// })
-
-// app.get('/CreateTable', (req, res) => {
-//     let sql = "CREATE TABLE todos (id INT AUTO_INCREMENT, text VARCHAR(30), isCompleted BOOLEAN, PRIMARY KEY(id))";
-//     db.query(sql, (err, result) => {
-//         if(err) {
-//             throw err;
-//         }
-//         res.send("New Table Created Successfully"); 
-//         console.log("Todos Table Created Successfully!")
-//     })
-// })
-
 app.post('/addTodo', (req, res) => {
     const text = req.body.text;
     let sql = "INSERT INTO todos (text) VALUES (?)";
@@ -60,18 +38,6 @@ app.post('/addTodo', (req, res) => {
     })
 })
 
-// app.get('/InsertRow2', (req, res) => {
-//     let post = {text: 'Second Post', isCompleted: false};
-//     let sql = "INSERT INTO todos SET ?";
-//     db.query(sql,post, (err, result) => {
-//         if(err) {
-//             throw err;
-//         }
-//         res.send("Data Inserted Successfully"); 
-//         console.log("Second Record Inserted in the Table Successfully!")
-//     })
-// })
-//get all
 app.get('/allTodos', (req, res) => {
     let sql = "SELECT * FROM todos";
     db.query(sql, (err, result) => {
@@ -83,19 +49,6 @@ app.get('/allTodos', (req, res) => {
     })
 })
 
-//get one
-// app.get('/allTodos/:id', (req, res) => {
-//     let sql = `SELECT * FROM todos WHERE id = ${req.params.id}`;
-//     db.query(sql, (err, result) => {
-//         if(err) {
-//             throw err;
-//         }
-//         res.send("Data Selection Executed Successfully"); 
-//         console.log(result)
-//     })
-// })
-
-//update with put
 app.put('/UpdateTodo/:id', (req, res) => {
     const text = req.body.text
     const id= req.body.id
@@ -109,7 +62,7 @@ app.put('/UpdateTodo/:id', (req, res) => {
     })
 })
 
-//delete with delete
+
 app.delete('/DeleteTodo/:id', (req, res) => {
     const id = req.params.id;
     let sql = 'DELETE FROM todos WHERE id = ?';
