@@ -70,7 +70,7 @@ app.delete('/DeleteTodo/:id', (req, res) => {
         if(err) {
             throw err;
         }
-        res.send("Row Deleted Successfully"); 
+        res.send("Row Deleted Successfully!"); 
         console.log(result)
     })
 })
