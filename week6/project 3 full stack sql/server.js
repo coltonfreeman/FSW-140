@@ -1,92 +1,103 @@
-const express = require("express");
-const cors = require('cors');
-const mysql = require("mysql2");
-const app = express();
-const bodyParser= require('body-parser')
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'Todos'
-})
+const express = require('express')
+const mysql = require("mysql2")
+const app = express()
 
 
-app.use(express.json());
-app.use(cors());
-app.use(bodyParser.urlencoded({extended: true}));
-
-
-const PORT = 9000;
-
-db.connect((err) => {
-    if (err){
-        throw err;
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'Todo' 
     }
-    console.log("MySql Database Connection Established Successfully!");
+)
+db.connect((err)=>{  
+    if(err){
+        throw err
+    }
+    console.log("database connected successfully")
 })
 
-app.post('/addTodo', (req, res) => {
-    const text = req.body.text;
-    let sql = "INSERT INTO todos (text) VALUES (?)";
-    db.query(sql,[text], (err, result) => {
-        if(err) {
-            throw err;
+app.get('/CreateDB', (req, res)=>{
+    let sqlString = "Create DataBase Todo"
+    db.query(sqlString, (err, result)=>{
+        if(err){
+            throw err
         }
-        res.send(result); 
-        console.log("Record Inserted in the Table Successfully!")
-    })
-})
-
-app.get('/allTodos', (req, res) => {
-    let sql = "SELECT * FROM todos";
-    db.query(sql, (err, result) => {
-        if(err) {
-            throw err;
-        }
-        res.send(result); 
         console.log(result)
+        res.send('Todo database created successfully')
     })
 })
 
-app.put('/UpdateTodo/:id', (req, res) => {
-    const text = req.body.text
-    const id= req.body.id
-    let sql = `UPDATE todos SET text = '${text}' WHERE id = ${id}`;
-    db.query(sql, [text, id], (err, result) => {
-        if(err) {
-            throw err;
+app.get('/createTable', (req,res)=>{
+    let myQuery = 'create table Todos (id int auto_increment, Todo varchar(100), message varchar(150), primary key(id))'
+    db.query(myQuery, (err, result)=>{
+        if(err){
+            throw err
         }
-        res.send("Updated Row Successfully!"); 
         console.log(result)
+        res.send('Table was created successfully')
     })
 })
 
-
-app.delete('/DeleteTodo/:id', (req, res) => {
-    const id = req.params.id;
-    let sql = 'DELETE FROM todos WHERE id = ?';
-    db.query(sql,id, (err, result) => {
-        if(err) {
-            throw err;
+app.get('/insertRow1', (req,res)=>{
+    let post = {Todo: 'First Todo', message: 'Congrats! First todo via a route'}
+    let myQuery = 'insert into Todos set ?'
+    db.query(myQuery, post, (err, result)=>{
+        if(err){
+            throw err
         }
-        res.send("Row Deleted Successfully!"); 
         console.log(result)
+        res.send('The first row inserted successfully')
     })
 })
 
-app.get('/completeTodo/:id/:boolean', (req, res) => {
-    let sql = `UPDATE todos SET isCompleted = ${req.params.boolean} WHERE id = ${req.params.id} `;
-    console.log(sql)
-    db.query(sql, (err, result) => {
-        if(err) {
-            throw err;
+app.get('/insertRow2', (req,res)=>{
+    let post = {Todo: 'Second Todo', message: 'Congrats! Second todo via a route'}
+    let myQuery = 'insert into Todos set ?'
+    db.query(myQuery, post, (err, result)=>{
+        if(err){
+            throw err
         }
-        res.send(result); 
         console.log(result)
+        res.send('The second row inserted successfully')
     })
 })
 
-app.listen(PORT, () => {
-    console.log(`Listening on PORT ${PORT}`);
+app.get('/displayRows', (req,res)=>{
+    let myQuery = 'select * from Todos'
+    db.query(myQuery, (err, result)=>{
+        if(err){
+            throw err
+        }
+        console.log(result)
+        res.send('SELECT query successful')
+    })
 })
+
+app.get('/updateRow/:id', (req,res)=>{
+    let newTodo = 'Update to the Todo column'
+    let myQuery = `Update Todos set Todo = '${newTodo}' where id = ${req.params.id}`
+    db.query(myQuery, (err,result)=>{
+        if(err){
+            throw err
+        }
+        console.log(result)
+        res.send('BAMM! Your Todo UPDATED Successfully')
+    })
+})
+
+app.get('/deleteRow/:id', (req,res)=>{
+    let myQuery = `Deleted from Todos where id = ${req.params.id}`
+    db.query(myQuery, (err,result)=>{
+        if(err){
+            throw err
+        }
+        console.log(result)
+        res.send('Done! The Todo was successfully DELETED')
+    })
+})
+
+app.listen('3000', ()=>{
+    console.log('This server is running ');
+});

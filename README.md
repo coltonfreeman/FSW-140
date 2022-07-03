@@ -1,1 +1,1 @@
-# FSW-140
+# FSW-140> GRANT ALL ON *.* to user_name@localhost IDENTIFIED BY 'password';

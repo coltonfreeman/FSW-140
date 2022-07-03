@@ -1,0 +1,29 @@
+li
+{
+    list-style: none;
+    
+}
+
+* {
+    text-align: center;
+    margin-left: 10px;
+    padding: 5px;
+     background-color:  rgb(249, 255, 255);
+     font-size: 22px;
+}
+
+button {
+    color: blue;
+}
+
+input {
+    background-color: white;
+    color: blue;
+}
+
+h3{
+    color: blue;
+    text-decoration: underline;
+}
+
+
